@@ -1,7 +1,7 @@
 CREATE DATABASE WAVE;
 
 
---CREEATE TABLE USERS
+--CREATE TABLE USERS
 CREATE TABLE users (
 u_id integer PRIMARY KEY,
 name text NOT NULL,
@@ -24,6 +24,13 @@ dest_mobile text,
 dest_merchant_id integer,
 when_created timestamp without time zone NOT NULL);
 
+--Alter table transfer
+ALTER TABLE public.transfers
+    ADD FOREIGN KEY (source_wallet_id)
+    REFERENCES public.wallets (wallet_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+    ON DELETE CASCADE;
+
 -- CREATE agents Table
 CREATE TABLE agents (
 agent_id integer PRIMARY KEY,
@@ -42,6 +49,13 @@ agent_id integer NOT NULL,
 amount numeric NOT NULL,
 fee_amount_scalar numeric NOT NULL,
 when_created timestamp without time zone NOT NULL);
+
+--Alter table agent_transactions
+ALTER TABLE public.agent_transactions
+    ADD FOREIGN KEY (agent_id)
+    REFERENCES public.agents (agent_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+    ON DELETE CASCADE;
 
 --Create Wallets Table
 CREATE TABLE wallets (
